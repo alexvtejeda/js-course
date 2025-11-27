@@ -2,7 +2,7 @@
 
 import { db } from '@/lib/db';
 import { users, userPhaseProgress, phases } from '@/lib/db/schema';
-import { createSession } from './session';
+import { createSession, addStoredAccount, switchAccount } from './session';
 import { redirect } from 'next/navigation';
 import { eq } from 'drizzle-orm';
 
@@ -12,6 +12,17 @@ export async function setupUser(name: string) {
   }
 
   try {
+    // Check if username already exists
+    const existingUser = await db
+      .select()
+      .from(users)
+      .where(eq(users.name, name.trim()))
+      .limit(1);
+
+    if (existingUser.length > 0) {
+      return { error: 'This name is already taken. Please choose a different name.' };
+    }
+
     // Create the user
     const [user] = await db
       .insert(users)
@@ -31,8 +42,9 @@ export async function setupUser(name: string) {
       });
     }
 
-    // Create session
+    // Create session and add to stored accounts
     await createSession(user.id);
+    await addStoredAccount(user.id);
   } catch (error) {
     // Don't catch redirect errors - they're expected behavior
     if (error instanceof Error && error.message === 'NEXT_REDIRECT') {
@@ -43,5 +55,23 @@ export async function setupUser(name: string) {
   }
 
   // Redirect to dashboard (outside try-catch to let redirect throw properly)
+  redirect('/dashboard');
+}
+
+export async function loginToAccount(userId: string) {
+  try {
+    const success = await switchAccount(userId);
+
+    if (!success) {
+      return { error: 'Account not found' };
+    }
+  } catch (error) {
+    if (error instanceof Error && error.message === 'NEXT_REDIRECT') {
+      throw error;
+    }
+    console.error('Error switching account:', error);
+    return { error: 'Failed to switch account. Please try again.' };
+  }
+
   redirect('/dashboard');
 }
