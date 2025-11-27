@@ -18,11 +18,11 @@ export default async function DashboardPage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'completed':
-        return <Badge className="bg-green-500">Completed</Badge>;
+        return <Badge className="bg-chart-1">Completed</Badge>;
       case 'in_progress':
-        return <Badge className="bg-blue-500">In Progress</Badge>;
+        return <Badge className="bg-primary">In Progress</Badge>;
       case 'unlocked':
-        return <Badge className="bg-yellow-500">Ready to Start</Badge>;
+        return <Badge className="bg-chart-5">Ready to Start</Badge>;
       case 'locked':
         return <Badge variant="secondary">Locked</Badge>;
       default:
@@ -87,7 +87,7 @@ export default async function DashboardPage() {
                   <CardContent>
                     {phase.totalLessons > 0 && (
                       <div className="mb-4">
-                        <div className="flex justify-between text-sm text-gray-600 mb-1">
+                        <div className="flex justify-between text-sm text-foreground mb-1">
                           <span>Lessons</span>
                           <span>{phase.completedLessons} / {phase.totalLessons}</span>
                         </div>

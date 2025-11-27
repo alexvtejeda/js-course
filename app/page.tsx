@@ -3,56 +3,58 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
-export default function LandingPage() {
-  const phases = [
-    {
-      number: 1,
-      title: 'JavaScript Fundamentals',
-      description: 'Review core JavaScript concepts including loops, arrays, and variable declaration',
-      color: 'bg-orange-50',
-      borderColor: 'border-orange-200',
-      badgeColor: 'bg-orange-500',
-    },
-    {
-      number: 2,
-      title: 'Promises & Async',
-      description: 'Master asynchronous JavaScript with promises and async/await',
-      color: 'bg-purple-50',
-      borderColor: 'border-purple-200',
-      badgeColor: 'bg-purple-500',
-    },
-    {
-      number: 3,
-      title: 'React Basics & Chess Setup',
-      description: 'Learn React fundamentals while setting up the chess board',
-      color: 'bg-green-50',
-      borderColor: 'border-green-200',
-      badgeColor: 'bg-green-500',
-    },
-    {
-      number: 4,
-      title: 'Chess Game Logic',
-      description: 'Implement piece movement, check, and checkmate detection',
-      color: 'bg-yellow-50',
-      borderColor: 'border-yellow-200',
-      badgeColor: 'bg-yellow-500',
-    },
-    {
-      number: 5,
-      title: 'AI Integration',
-      description: 'Integrate Ollama and Chess-Llama for AI-powered gameplay',
-      color: 'bg-red-50',
-      borderColor: 'border-red-200',
-      badgeColor: 'bg-red-500',
-    },
-  ];
+const phases = [
+  {
+    number: 1,
+    title: 'JavaScript Fundamentals',
+    description: 'Review core JavaScript concepts including loops, arrays, and variable declaration',
+    color: 'bg-card',
+    borderColor: 'border-secondary',
+    badgeColor: 'bg-primary',
+  },
+  {
+    number: 2,
+    title: 'Promises & Async',
+    description: 'Master asynchronous JavaScript with promises and async/await',
+    color: 'bg-card',
+    borderColor: 'border-secondary',
+    badgeColor: 'bg-chart-1',
+  },
+  {
+    number: 3,
+    title: 'React Basics & Chess Setup',
+    description: 'Learn React fundamentals while setting up the chess board',
+    color: 'bg-card',
+    borderColor: 'border-secondary',
+    badgeColor: 'bg-chart-2',
+  },
+  {
+    number: 4,
+    title: 'Chess Game Logic',
+    description: 'Implement piece movement, check, and checkmate detection',
+    color: 'bg-card',
+    borderColor: 'border-secondary',
+    badgeColor: 'bg-chart-3',
+  },
+  {
+    number: 5,
+    title: 'AI Integration',
+    description: 'Integrate Ollama and Chess-Llama for AI-powered gameplay',
+    color: 'bg-card',
+    borderColor: 'border-secondary',
+    badgeColor: 'bg-chart-4',
+  },
+];
 
+
+
+export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-background to-muted-background">
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-16">
         <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
             Learn JavaScript by Building Chess
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
@@ -93,7 +95,7 @@ export default function LandingPage() {
         {/* Features */}
         <div className="grid md:grid-cols-3 gap-8 mt-16">
           <div className="text-center p-6">
-            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-chart-4 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-3xl">🎯</span>
             </div>
             <h3 className="text-xl font-bold mb-2">Progressive Learning</h3>
@@ -102,7 +104,7 @@ export default function LandingPage() {
             </p>
           </div>
           <div className="text-center p-6">
-            <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-chart-1 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-3xl">💻</span>
             </div>
             <h3 className="text-xl font-bold mb-2">Hands-On Practice</h3>
@@ -111,7 +113,7 @@ export default function LandingPage() {
             </p>
           </div>
           <div className="text-center p-6">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="w-16 h-16 bg-chart-2 rounded-full flex items-center justify-center mx-auto mb-4">
               <span className="text-3xl">🤖</span>
             </div>
             <h3 className="text-xl font-bold mb-2">AI Opponent</h3>
@@ -164,9 +166,10 @@ export default function LandingPage() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-50 border-t mt-16 py-8">
+      <footer className="bg-background border-t mt-16 py-8">
         <div className="container mx-auto px-4 text-center text-gray-600">
           <p>Built with Next.js, React, and PostgreSQL</p>
+          <p>Thank you Claude, you made this possible</p>
         </div>
       </footer>
     </div>
