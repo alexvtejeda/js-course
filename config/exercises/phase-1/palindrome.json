@@ -1,0 +1,55 @@
+{
+  "id": "palindrome",
+  "title": "Check Palindrome",
+  "description": "Determine if a string reads the same forwards and backwards",
+  "instructions": "Write a function `isPalindrome(str)` that checks if a string is a palindrome (reads the same forwards and backwards). Ignore spaces and be case-insensitive.\n\nExample: isPalindrome('racecar') should return true\nExample: isPalindrome('hello') should return false",
+  "difficulty": "medium",
+  "starterCode": "function isPalindrome(str) {\n  // Your code here\n  \n}",
+  "solution": "function isPalindrome(str) {\n  const cleaned = str.toLowerCase().replace(/ /g, '');\n  for (let i = 0; i < cleaned.length / 2; i++) {\n    if (cleaned[i] !== cleaned[cleaned.length - 1 - i]) {\n      return false;\n    }\n  }\n  return true;\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "First, convert the string to lowercase and remove spaces. Then compare characters from both ends moving toward the middle."
+    },
+    {
+      "level": 2,
+      "content": "Use .toLowerCase() and .replace(/ /g, '') to clean the string. Then compare the first character with the last, second with second-to-last, etc. You only need to check half the string."
+    },
+    {
+      "level": 3,
+      "content": "Clean: `const cleaned = str.toLowerCase().replace(/ /g, '');`. Loop to middle: `for (let i = 0; i < cleaned.length / 2; i++)`. Compare: `if (cleaned[i] !== cleaned[cleaned.length - 1 - i]) return false;`"
+    }
+  ],
+  "testCases": [
+    {
+      "input": "racecar",
+      "expected": true,
+      "description": "'racecar' is a palindrome"
+    },
+    {
+      "input": "hello",
+      "expected": false,
+      "description": "'hello' is not a palindrome"
+    },
+    {
+      "input": "A man a plan a canal Panama",
+      "expected": true,
+      "description": "Famous palindrome with spaces",
+      "hidden": true
+    },
+    {
+      "input": "Was it a car or a cat I saw",
+      "expected": true,
+      "description": "Case-insensitive palindrome",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "String manipulation and cleaning",
+    "Comparing characters from both ends",
+    "Efficient loop iteration (only checking half)",
+    "Early return optimization"
+  ],
+  "tags": ["loops", "strings", "conditionals", "algorithms"],
+  "timeEstimateMinutes": 15
+}

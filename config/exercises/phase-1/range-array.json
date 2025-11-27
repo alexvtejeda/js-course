@@ -1,0 +1,55 @@
+{
+  "id": "range-array",
+  "title": "Create Range Array",
+  "description": "Generate an array of numbers within a specified range",
+  "instructions": "Write a function `range(start, end)` that creates an array of numbers from start to end (inclusive).\n\nExample: range(1, 5) should return [1, 2, 3, 4, 5]\nExample: range(3, 7) should return [3, 4, 5, 6, 7]",
+  "difficulty": "easy",
+  "starterCode": "function range(start, end) {\n  // Your code here\n  \n}",
+  "solution": "function range(start, end) {\n  const result = [];\n  for (let i = start; i <= end; i++) {\n    result.push(i);\n  }\n  return result;\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "Create an empty array and use a loop to add each number from start to end."
+    },
+    {
+      "level": 2,
+      "content": "Loop from start to end (inclusive) and push each number to your result array. Make sure to use <= for the end condition to include the end number."
+    },
+    {
+      "level": 3,
+      "content": "Use `const result = [];` then `for (let i = start; i <= end; i++)` and `result.push(i)`. Return result."
+    }
+  ],
+  "testCases": [
+    {
+      "input": [1, 5],
+      "expected": [1, 2, 3, 4, 5],
+      "description": "Range from 1 to 5"
+    },
+    {
+      "input": [3, 7],
+      "expected": [3, 4, 5, 6, 7],
+      "description": "Range from 3 to 7"
+    },
+    {
+      "input": [0, 0],
+      "expected": [0],
+      "description": "Same start and end",
+      "hidden": true
+    },
+    {
+      "input": [-3, 2],
+      "expected": [-3, -2, -1, 0, 1, 2],
+      "description": "Negative to positive range",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "Creating arrays dynamically",
+    "Using loop variables as values",
+    "Understanding inclusive vs exclusive ranges",
+    "Building sequences with loops"
+  ],
+  "tags": ["loops", "arrays", "sequences"],
+  "timeEstimateMinutes": 8
+}

@@ -1,0 +1,55 @@
+{
+  "id": "array-chunk",
+  "title": "Chunk Array",
+  "description": "Split an array into chunks of a specified size",
+  "instructions": "Write a function `chunkArray(arr, size)` that splits an array into smaller arrays (chunks) of the specified size.\n\nExample: chunkArray([1, 2, 3, 4, 5], 2) should return [[1, 2], [3, 4], [5]]",
+  "difficulty": "medium",
+  "starterCode": "function chunkArray(arr, size) {\n  // Your code here\n  \n}",
+  "solution": "function chunkArray(arr, size) {\n  const chunks = [];\n  for (let i = 0; i < arr.length; i += size) {\n    chunks.push(arr.slice(i, i + size));\n  }\n  return chunks;\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "You'll need to create sub-arrays by taking 'size' elements at a time from the original array. Think about how to advance through the array by 'size' steps."
+    },
+    {
+      "level": 2,
+      "content": "Use a loop that increments by 'size' instead of 1 (i += size). Use arr.slice(i, i + size) to extract each chunk and push it to a results array."
+    },
+    {
+      "level": 3,
+      "content": "Create `const chunks = [];`. Loop with `for (let i = 0; i < arr.length; i += size)`. Extract chunks with `chunks.push(arr.slice(i, i + size))`. The slice method handles the last partial chunk automatically."
+    }
+  ],
+  "testCases": [
+    {
+      "input": [[1, 2, 3, 4, 5], 2],
+      "expected": [[1, 2], [3, 4], [5]],
+      "description": "Chunk [1,2,3,4,5] by 2"
+    },
+    {
+      "input": [[1, 2, 3, 4, 5, 6], 3],
+      "expected": [[1, 2, 3], [4, 5, 6]],
+      "description": "Chunk evenly by 3"
+    },
+    {
+      "input": [[1, 2, 3], 1],
+      "expected": [[1], [2], [3]],
+      "description": "Chunk by 1",
+      "hidden": true
+    },
+    {
+      "input": [[1, 2, 3, 4, 5, 6, 7], 4],
+      "expected": [[1, 2, 3, 4], [5, 6, 7]],
+      "description": "Uneven chunks",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "Custom loop increment values (i += size)",
+    "Using array.slice() to extract portions",
+    "Building nested arrays",
+    "Handling uneven divisions"
+  ],
+  "tags": ["loops", "arrays", "slice", "nested-arrays"],
+  "timeEstimateMinutes": 15
+}

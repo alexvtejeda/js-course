@@ -1,0 +1,55 @@
+{
+  "id": "word-count",
+  "title": "Count Word Occurrences",
+  "description": "Count how many times each word appears in a string",
+  "instructions": "Write a function `wordCount(str)` that takes a string and returns an object where keys are words and values are the number of times each word appears. Convert everything to lowercase.\n\nExample: wordCount('hello world hello') should return { hello: 2, world: 1 }",
+  "difficulty": "hard",
+  "starterCode": "function wordCount(str) {\n  // Your code here\n  \n}",
+  "solution": "function wordCount(str) {\n  const words = str.toLowerCase().split(' ');\n  const counts = {};\n  for (let i = 0; i < words.length; i++) {\n    if (counts[words[i]]) {\n      counts[words[i]]++;\n    } else {\n      counts[words[i]] = 1;\n    }\n  }\n  return counts;\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "Use an object to store word counts. For each word, either increment its count if it exists, or set it to 1 if it's new."
+    },
+    {
+      "level": 2,
+      "content": "Split the string into words and create an empty object. Loop through words and check if each word already exists in the object. If yes, increment its value; if no, set it to 1."
+    },
+    {
+      "level": 3,
+      "content": "Use `const words = str.toLowerCase().split(' ');` and `const counts = {};`. Loop and check: `if (counts[words[i]])` then `counts[words[i]]++` else `counts[words[i]] = 1`."
+    }
+  ],
+  "testCases": [
+    {
+      "input": "hello world hello",
+      "expected": { "hello": 2, "world": 1 },
+      "description": "Count words in 'hello world hello'"
+    },
+    {
+      "input": "the cat and the dog",
+      "expected": { "the": 2, "cat": 1, "and": 1, "dog": 1 },
+      "description": "Multiple words with repetition"
+    },
+    {
+      "input": "test",
+      "expected": { "test": 1 },
+      "description": "Single word",
+      "hidden": true
+    },
+    {
+      "input": "a b a c b a",
+      "expected": { "a": 3, "b": 2, "c": 1 },
+      "description": "Short words with varying counts",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "Using objects to store key-value pairs",
+    "Checking object property existence",
+    "Incrementing object values",
+    "Working with object bracket notation"
+  ],
+  "tags": ["loops", "objects", "strings", "counting"],
+  "timeEstimateMinutes": 18
+}

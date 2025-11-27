@@ -1,0 +1,55 @@
+{
+  "id": "title-case",
+  "title": "Title Case String",
+  "description": "Convert a string to title case (capitalize first letter of each word)",
+  "instructions": "Write a function `titleCase(str)` that converts a string to title case, where the first letter of each word is capitalized and all other letters are lowercase.\n\nExample: titleCase('hello world') should return 'Hello World'\nExample: titleCase('javaScript is FUN') should return 'Javascript Is Fun'",
+  "difficulty": "medium",
+  "starterCode": "function titleCase(str) {\n  // Your code here\n  \n}",
+  "solution": "function titleCase(str) {\n  const words = str.toLowerCase().split(' ');\n  for (let i = 0; i < words.length; i++) {\n    words[i] = words[i][0].toUpperCase() + words[i].slice(1);\n  }\n  return words.join(' ');\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "Break the string into individual words, capitalize the first letter of each word, then join them back together."
+    },
+    {
+      "level": 2,
+      "content": "Use .split(' ') to get an array of words. For each word, take the first character (.toUpperCase()) and concatenate it with the rest of the word (.slice(1)). Finally, .join(' ') the words back."
+    },
+    {
+      "level": 3,
+      "content": "Split: `const words = str.toLowerCase().split(' ');`. Loop and modify: `words[i] = words[i][0].toUpperCase() + words[i].slice(1);`. Join: `return words.join(' ');`"
+    }
+  ],
+  "testCases": [
+    {
+      "input": "hello world",
+      "expected": "Hello World",
+      "description": "Title case 'hello world'"
+    },
+    {
+      "input": "javaScript is FUN",
+      "expected": "Javascript Is Fun",
+      "description": "Mixed case input"
+    },
+    {
+      "input": "a",
+      "expected": "A",
+      "description": "Single letter",
+      "hidden": true
+    },
+    {
+      "input": "the quick brown fox",
+      "expected": "The Quick Brown Fox",
+      "description": "Multiple words",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "String manipulation with split/join",
+    "Using string methods (toUpperCase, slice)",
+    "Modifying array elements in place",
+    "Combining string operations"
+  ],
+  "tags": ["loops", "strings", "arrays", "string-methods"],
+  "timeEstimateMinutes": 15
+}

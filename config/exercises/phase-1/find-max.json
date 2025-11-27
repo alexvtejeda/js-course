@@ -1,0 +1,55 @@
+{
+  "id": "find-max",
+  "title": "Find Maximum Value",
+  "description": "Find the largest number in an array",
+  "instructions": "Write a function `findMax(arr)` that takes an array of numbers and returns the largest number.\n\nExample: findMax([3, 7, 2, 9, 1]) should return 9",
+  "difficulty": "easy",
+  "starterCode": "function findMax(arr) {\n  // Your code here\n  \n}",
+  "solution": "function findMax(arr) {\n  let max = arr[0];\n  for (let i = 1; i < arr.length; i++) {\n    if (arr[i] > max) {\n      max = arr[i];\n    }\n  }\n  return max;\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "Start by assuming the first element is the maximum, then compare it with all other elements."
+    },
+    {
+      "level": 2,
+      "content": "Initialize a variable `max` with the first array element (arr[0]). Then loop through the rest of the array and update max if you find a larger value."
+    },
+    {
+      "level": 3,
+      "content": "Set `let max = arr[0];` then loop from index 1: `for (let i = 1; i < arr.length; i++)`. Use `if (arr[i] > max) { max = arr[i]; }` to update the maximum."
+    }
+  ],
+  "testCases": [
+    {
+      "input": [3, 7, 2, 9, 1],
+      "expected": 9,
+      "description": "Max of [3, 7, 2, 9, 1]"
+    },
+    {
+      "input": [5],
+      "expected": 5,
+      "description": "Single element array"
+    },
+    {
+      "input": [-10, -5, -20, -1],
+      "expected": -1,
+      "description": "All negative numbers",
+      "hidden": true
+    },
+    {
+      "input": [100, 200, 50, 200, 75],
+      "expected": 200,
+      "description": "Duplicate max values",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "Initializing variables with array values",
+    "Using conditional statements in loops",
+    "Comparing values to find maximum",
+    "Understanding loop starting positions"
+  ],
+  "tags": ["loops", "arrays", "conditionals", "comparison"],
+  "timeEstimateMinutes": 10
+}

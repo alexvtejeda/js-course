@@ -1,0 +1,55 @@
+{
+  "id": "reverse-string",
+  "title": "Reverse a String",
+  "description": "Reverse the characters in a string using a loop",
+  "instructions": "Write a function `reverseString(str)` that takes a string and returns it reversed.\n\nExample: reverseString('hello') should return 'olleh'\n\nNote: Try to solve this using a loop, not built-in methods like .reverse()",
+  "difficulty": "easy",
+  "starterCode": "function reverseString(str) {\n  // Your code here\n  \n}",
+  "solution": "function reverseString(str) {\n  let reversed = '';\n  for (let i = str.length - 1; i >= 0; i--) {\n    reversed += str[i];\n  }\n  return reversed;\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "Think about building a new string by adding characters from the original string in reverse order."
+    },
+    {
+      "level": 2,
+      "content": "Start with an empty string and loop through the original string backwards (from the last character to the first). Add each character to your result string."
+    },
+    {
+      "level": 3,
+      "content": "Use `let reversed = '';` then loop backwards: `for (let i = str.length - 1; i >= 0; i--)` and build the reversed string with `reversed += str[i]`."
+    }
+  ],
+  "testCases": [
+    {
+      "input": "hello",
+      "expected": "olleh",
+      "description": "Reverse 'hello'"
+    },
+    {
+      "input": "JavaScript",
+      "expected": "tpircSavaJ",
+      "description": "Reverse 'JavaScript'"
+    },
+    {
+      "input": "a",
+      "expected": "a",
+      "description": "Single character",
+      "hidden": true
+    },
+    {
+      "input": "",
+      "expected": "",
+      "description": "Empty string",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "Looping backwards through strings",
+    "String concatenation",
+    "Understanding string indexing",
+    "Working with string.length property"
+  ],
+  "tags": ["loops", "strings", "iteration"],
+  "timeEstimateMinutes": 8
+}

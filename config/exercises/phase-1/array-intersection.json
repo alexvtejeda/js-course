@@ -1,0 +1,55 @@
+{
+  "id": "array-intersection",
+  "title": "Array Intersection",
+  "description": "Find common elements between two arrays",
+  "instructions": "Write a function `arrayIntersection(arr1, arr2)` that returns a new array containing only elements that appear in both arrays (without duplicates).\n\nExample: arrayIntersection([1, 2, 3], [2, 3, 4]) should return [2, 3]",
+  "difficulty": "medium",
+  "starterCode": "function arrayIntersection(arr1, arr2) {\n  // Your code here\n  \n}",
+  "solution": "function arrayIntersection(arr1, arr2) {\n  const intersection = [];\n  for (let i = 0; i < arr1.length; i++) {\n    if (arr2.includes(arr1[i]) && !intersection.includes(arr1[i])) {\n      intersection.push(arr1[i]);\n    }\n  }\n  return intersection;\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "Loop through the first array and check if each element exists in the second array. Also make sure you don't add duplicates to your result."
+    },
+    {
+      "level": 2,
+      "content": "For each element in arr1, use arr2.includes() to check if it exists in arr2. Before adding to your result, also check that it's not already in your result array using .includes()."
+    },
+    {
+      "level": 3,
+      "content": "Create `const intersection = [];`. Loop: `for (let i = 0; i < arr1.length; i++)`. Check: `if (arr2.includes(arr1[i]) && !intersection.includes(arr1[i]))` then `intersection.push(arr1[i])`."
+    }
+  ],
+  "testCases": [
+    {
+      "input": [[1, 2, 3], [2, 3, 4]],
+      "expected": [2, 3],
+      "description": "Intersection of [1,2,3] and [2,3,4]"
+    },
+    {
+      "input": [[1, 2, 3], [4, 5, 6]],
+      "expected": [],
+      "description": "No common elements"
+    },
+    {
+      "input": [[1, 1, 2, 2, 3], [2, 2, 3, 3, 4]],
+      "expected": [2, 3],
+      "description": "Arrays with duplicates",
+      "hidden": true
+    },
+    {
+      "input": [["a", "b", "c"], ["b", "c", "d"]],
+      "expected": ["b", "c"],
+      "description": "String arrays",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "Comparing arrays element by element",
+    "Using includes() for existence checks",
+    "Preventing duplicates in results",
+    "Working with multiple conditions"
+  ],
+  "tags": ["loops", "arrays", "includes", "comparison"],
+  "timeEstimateMinutes": 15
+}

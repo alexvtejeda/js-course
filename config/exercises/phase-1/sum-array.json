@@ -1,0 +1,55 @@
+{
+  "id": "sum-array",
+  "title": "Sum Array Elements",
+  "description": "Calculate the sum of all numbers in an array using a loop",
+  "instructions": "Write a function `sumArray(arr)` that takes an array of numbers and returns their sum.\n\nExample: sumArray([1, 2, 3, 4]) should return 10",
+  "difficulty": "easy",
+  "starterCode": "function sumArray(arr) {\n  // Your code here\n  \n}",
+  "solution": "function sumArray(arr) {\n  let sum = 0;\n  for (let i = 0; i < arr.length; i++) {\n    sum += arr[i];\n  }\n  return sum;\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "You'll need to create a variable to keep track of the running total as you loop through the array."
+    },
+    {
+      "level": 2,
+      "content": "Initialize a variable to 0, then use a for loop to iterate through each element in the array. Add each element to your sum variable."
+    },
+    {
+      "level": 3,
+      "content": "Use `let sum = 0;` then loop with `for (let i = 0; i < arr.length; i++)` and add each element with `sum += arr[i]`. Return sum at the end."
+    }
+  ],
+  "testCases": [
+    {
+      "input": [1, 2, 3, 4],
+      "expected": 10,
+      "description": "Sum of [1, 2, 3, 4]"
+    },
+    {
+      "input": [10, 20, 30],
+      "expected": 60,
+      "description": "Sum of [10, 20, 30]"
+    },
+    {
+      "input": [],
+      "expected": 0,
+      "description": "Empty array",
+      "hidden": true
+    },
+    {
+      "input": [-1, -2, -3],
+      "expected": -6,
+      "description": "Negative numbers",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "Using for loops to iterate through arrays",
+    "Accessing array elements by index",
+    "Accumulating values in a variable",
+    "Handling edge cases like empty arrays"
+  ],
+  "tags": ["loops", "arrays", "accumulation", "fundamentals"],
+  "timeEstimateMinutes": 8
+}

@@ -1,0 +1,55 @@
+{
+  "id": "flatten-array",
+  "title": "Flatten Nested Array",
+  "description": "Convert a nested array into a single-level array",
+  "instructions": "Write a function `flattenArray(arr)` that takes a nested array (one level deep) and returns a flattened array.\n\nExample: flattenArray([[1, 2], [3, 4], [5]]) should return [1, 2, 3, 4, 5]\n\nNote: Only handle arrays nested one level deep",
+  "difficulty": "medium",
+  "starterCode": "function flattenArray(arr) {\n  // Your code here\n  \n}",
+  "solution": "function flattenArray(arr) {\n  const flattened = [];\n  for (let i = 0; i < arr.length; i++) {\n    for (let j = 0; j < arr[i].length; j++) {\n      flattened.push(arr[i][j]);\n    }\n  }\n  return flattened;\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "You'll need nested loops: one to go through each sub-array, and another to go through elements within each sub-array."
+    },
+    {
+      "level": 2,
+      "content": "Use an outer loop to iterate through arr, and an inner loop to iterate through arr[i]. Push each element from the inner array to your result array."
+    },
+    {
+      "level": 3,
+      "content": "Create `const flattened = [];`. Outer loop: `for (let i = 0; i < arr.length; i++)`. Inner loop: `for (let j = 0; j < arr[i].length; j++)`. Then `flattened.push(arr[i][j])`."
+    }
+  ],
+  "testCases": [
+    {
+      "input": [[1, 2], [3, 4], [5]],
+      "expected": [1, 2, 3, 4, 5],
+      "description": "Flatten [[1,2],[3,4],[5]]"
+    },
+    {
+      "input": [[1], [2], [3]],
+      "expected": [1, 2, 3],
+      "description": "Single element sub-arrays"
+    },
+    {
+      "input": [[]],
+      "expected": [],
+      "description": "Empty sub-array",
+      "hidden": true
+    },
+    {
+      "input": [[10, 20, 30], [40, 50]],
+      "expected": [10, 20, 30, 40, 50],
+      "description": "Variable length sub-arrays",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "Using nested loops",
+    "Working with 2D arrays",
+    "Accessing nested array elements",
+    "Building single arrays from nested structures"
+  ],
+  "tags": ["loops", "nested-loops", "arrays", "2d-arrays"],
+  "timeEstimateMinutes": 15
+}

@@ -1,0 +1,55 @@
+{
+  "id": "count-vowels",
+  "title": "Count Vowels",
+  "description": "Count the number of vowels in a string",
+  "instructions": "Write a function `countVowels(str)` that counts how many vowels (a, e, i, o, u) are in the string. Count both uppercase and lowercase vowels.\n\nExample: countVowels('hello world') should return 3",
+  "difficulty": "easy",
+  "starterCode": "function countVowels(str) {\n  // Your code here\n  \n}",
+  "solution": "function countVowels(str) {\n  const vowels = 'aeiouAEIOU';\n  let count = 0;\n  for (let i = 0; i < str.length; i++) {\n    if (vowels.includes(str[i])) {\n      count++;\n    }\n  }\n  return count;\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "You'll need to check each character in the string to see if it's a vowel. Consider creating a string or array of all vowels to check against."
+    },
+    {
+      "level": 2,
+      "content": "Create a string with all vowels (both uppercase and lowercase): 'aeiouAEIOU'. Loop through each character and check if it's in your vowels string using .includes()."
+    },
+    {
+      "level": 3,
+      "content": "Use `const vowels = 'aeiouAEIOU';` and `let count = 0;`. Loop through the string with `for (let i = 0; i < str.length; i++)` and check `if (vowels.includes(str[i]))` then increment count."
+    }
+  ],
+  "testCases": [
+    {
+      "input": "hello world",
+      "expected": 3,
+      "description": "Count vowels in 'hello world'"
+    },
+    {
+      "input": "AEIOU",
+      "expected": 5,
+      "description": "All uppercase vowels"
+    },
+    {
+      "input": "xyz",
+      "expected": 0,
+      "description": "No vowels",
+      "hidden": true
+    },
+    {
+      "input": "The Quick Brown Fox",
+      "expected": 5,
+      "description": "Mixed case",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "Iterating through strings character by character",
+    "Using string methods like includes()",
+    "Counting occurrences with conditionals",
+    "Handling both uppercase and lowercase"
+  ],
+  "tags": ["loops", "strings", "conditionals", "counting"],
+  "timeEstimateMinutes": 10
+}
