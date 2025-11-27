@@ -1,0 +1,61 @@
+{
+  "id": "fizzbuzz",
+  "title": "FizzBuzz",
+  "description": "The classic FizzBuzz problem - a great way to practice loops and conditionals",
+  "instructions": "Write a function that takes a number `n` and returns an array of strings from 1 to n where:\n- For multiples of 3, add \"Fizz\" instead of the number\n- For multiples of 5, add \"Buzz\" instead of the number\n- For multiples of both 3 and 5, add \"FizzBuzz\"\n- For all other numbers, add the number as a string\n\nExample: fizzBuzz(5) should return [\"1\", \"2\", \"Fizz\", \"4\", \"Buzz\"]",
+  "difficulty": "easy",
+  "starterCode": "function fizzBuzz(n) {\n  // Your code here\n  \n}",
+  "solution": "function fizzBuzz(n) {\n  const result = [];\n  for (let i = 1; i <= n; i++) {\n    if (i % 15 === 0) {\n      result.push('FizzBuzz');\n    } else if (i % 3 === 0) {\n      result.push('Fizz');\n    } else if (i % 5 === 0) {\n      result.push('Buzz');\n    } else {\n      result.push(String(i));\n    }\n  }\n  return result;\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "Think about the order of your conditions. Should you check for multiples of 15 first, or multiples of 3 and 5 separately?"
+    },
+    {
+      "level": 2,
+      "content": "Use the modulo operator (%) to check if a number is divisible by another. If `i % 3 === 0`, then i is divisible by 3. Remember that 15 is divisible by both 3 and 5!"
+    },
+    {
+      "level": 3,
+      "content": "Check for divisibility by 15 first (i % 15 === 0), then by 3, then by 5. Use an array and push() to build your result. Convert numbers to strings using String(i)."
+    }
+  ],
+  "testCases": [
+    {
+      "input": 5,
+      "expected": ["1", "2", "Fizz", "4", "Buzz"],
+      "description": "Basic test with n=5"
+    },
+    {
+      "input": 15,
+      "expected": ["1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13", "14", "FizzBuzz"],
+      "description": "Test with n=15 including FizzBuzz"
+    },
+    {
+      "input": 3,
+      "expected": ["1", "2", "Fizz"],
+      "description": "Small test with n=3"
+    },
+    {
+      "input": 1,
+      "expected": ["1"],
+      "description": "Edge case with n=1",
+      "hidden": true
+    },
+    {
+      "input": 30,
+      "expected": ["1", "2", "Fizz", "4", "Buzz", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13", "14", "FizzBuzz", "16", "17", "Fizz", "19", "Buzz", "Fizz", "22", "23", "Fizz", "Buzz", "26", "Fizz", "28", "29", "FizzBuzz"],
+      "description": "Larger test with n=30",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "Using for loops to iterate",
+    "Working with conditional statements (if/else)",
+    "Using the modulo operator for divisibility checks",
+    "Building and returning arrays",
+    "Type conversion (number to string)"
+  ],
+  "tags": ["loops", "conditionals", "arrays", "fundamentals"],
+  "timeEstimateMinutes": 10
+}
