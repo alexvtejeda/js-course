@@ -68,21 +68,232 @@ export async function seedLessons() {
     return;
   }
 
-  // Add FizzBuzz exercise
-  await db.insert(lessons).values({
-    phaseId: phase1.id,
-    lessonNumber: 1,
-    title: 'FizzBuzz',
-    slug: 'fizzbuzz',
-    description: 'Practice loops and conditionals with the classic FizzBuzz problem',
-    type: 'exercise',
-    content: {
+  // Phase 1 exercises
+  const phase1Lessons = [
+    {
+      lessonNumber: 1,
+      title: 'FizzBuzz',
+      slug: 'fizzbuzz',
+      description: 'Practice loops and conditionals with the classic FizzBuzz problem',
       exerciseId: 'fizzbuzz',
     },
-    requiredForCompletion: true,
-  }).onConflictDoNothing();
+    {
+      lessonNumber: 2,
+      title: 'Sum Array Elements',
+      slug: 'sum-array',
+      description: 'Calculate the sum of all numbers in an array using a loop',
+      exerciseId: 'sum-array',
+    },
+    {
+      lessonNumber: 3,
+      title: 'Find Maximum Value',
+      slug: 'find-max',
+      description: 'Find the largest number in an array',
+      exerciseId: 'find-max',
+    },
+    {
+      lessonNumber: 4,
+      title: 'Reverse a String',
+      slug: 'reverse-string',
+      description: 'Reverse the characters in a string using a loop',
+      exerciseId: 'reverse-string',
+    },
+    {
+      lessonNumber: 5,
+      title: 'Count Vowels',
+      slug: 'count-vowels',
+      description: 'Count the number of vowels in a string',
+      exerciseId: 'count-vowels',
+    },
+    {
+      lessonNumber: 6,
+      title: 'Filter Even Numbers',
+      slug: 'filter-evens',
+      description: 'Create a new array containing only even numbers',
+      exerciseId: 'filter-evens',
+    },
+    {
+      lessonNumber: 7,
+      title: 'Calculate Factorial',
+      slug: 'factorial',
+      description: 'Calculate the factorial of a number using a loop',
+      exerciseId: 'factorial',
+    },
+    {
+      lessonNumber: 8,
+      title: 'Check Palindrome',
+      slug: 'palindrome',
+      description: 'Determine if a string reads the same forwards and backwards',
+      exerciseId: 'palindrome',
+    },
+    {
+      lessonNumber: 9,
+      title: 'Chunk Array',
+      slug: 'array-chunk',
+      description: 'Split an array into chunks of a specified size',
+      exerciseId: 'array-chunk',
+    },
+    {
+      lessonNumber: 10,
+      title: 'Flatten Nested Array',
+      slug: 'flatten-array',
+      description: 'Convert a nested array into a single-level array',
+      exerciseId: 'flatten-array',
+    },
+    {
+      lessonNumber: 11,
+      title: 'Remove Duplicates',
+      slug: 'remove-duplicates',
+      description: 'Create an array with duplicate values removed',
+      exerciseId: 'remove-duplicates',
+    },
+    {
+      lessonNumber: 12,
+      title: 'Create Range Array',
+      slug: 'range-array',
+      description: 'Generate an array of numbers within a specified range',
+      exerciseId: 'range-array',
+    },
+    {
+      lessonNumber: 13,
+      title: 'Title Case String',
+      slug: 'title-case',
+      description: 'Convert a string to title case',
+      exerciseId: 'title-case',
+    },
+    {
+      lessonNumber: 14,
+      title: 'Count Word Occurrences',
+      slug: 'word-count',
+      description: 'Count how many times each word appears in a string',
+      exerciseId: 'word-count',
+    },
+    {
+      lessonNumber: 15,
+      title: 'Array Intersection',
+      slug: 'array-intersection',
+      description: 'Find common elements between two arrays',
+      exerciseId: 'array-intersection',
+    },
+  ];
 
-  console.log('Lessons seeded successfully!');
+  for (const lesson of phase1Lessons) {
+    await db.insert(lessons).values({
+      phaseId: phase1.id,
+      lessonNumber: lesson.lessonNumber,
+      title: lesson.title,
+      slug: lesson.slug,
+      description: lesson.description,
+      type: 'exercise',
+      content: {
+        exerciseId: lesson.exerciseId,
+      },
+      requiredForCompletion: true,
+    }).onConflictDoNothing();
+  }
+
+  console.log('Phase 1 lessons seeded successfully!');
+
+  // Get Phase 2
+  const phase2 = await db.query.phases.findFirst({
+    where: eq(phases.phaseNumber, 2),
+  });
+
+  if (!phase2) {
+    console.error('Phase 2 not found. Run seedPhases first.');
+    return;
+  }
+
+  // Phase 2 exercises
+  const phase2Lessons = [
+    {
+      lessonNumber: 1,
+      title: 'Create a Basic Promise',
+      slug: 'basic-promise',
+      description: 'Learn how to create and use a simple Promise',
+      exerciseId: 'basic-promise',
+    },
+    {
+      lessonNumber: 2,
+      title: 'Promise Chaining',
+      slug: 'promise-chain',
+      description: 'Chain multiple promises together',
+      exerciseId: 'promise-chain',
+    },
+    {
+      lessonNumber: 3,
+      title: 'Basic Async/Await',
+      slug: 'async-await-basic',
+      description: 'Convert promise-based code to async/await',
+      exerciseId: 'async-await-basic',
+    },
+    {
+      lessonNumber: 4,
+      title: 'Promise Error Handling',
+      slug: 'error-handling',
+      description: 'Handle errors in promises with catch',
+      exerciseId: 'error-handling',
+    },
+    {
+      lessonNumber: 5,
+      title: 'Try/Catch with Async/Await',
+      slug: 'try-catch-async',
+      description: 'Handle errors using try/catch in async functions',
+      exerciseId: 'try-catch-async',
+    },
+    {
+      lessonNumber: 6,
+      title: 'Promise.all() - Parallel Execution',
+      slug: 'promise-all',
+      description: 'Run multiple promises in parallel',
+      exerciseId: 'promise-all',
+    },
+    {
+      lessonNumber: 7,
+      title: 'Sequential Promise Execution',
+      slug: 'sequential-promises',
+      description: 'Execute promises one after another in sequence',
+      exerciseId: 'sequential-promises',
+    },
+    {
+      lessonNumber: 8,
+      title: 'Promise.race() - First to Finish',
+      slug: 'promise-race',
+      description: 'Use Promise.race() to get the first resolved promise',
+      exerciseId: 'promise-race',
+    },
+    {
+      lessonNumber: 9,
+      title: 'Retry Failed Operations',
+      slug: 'retry-logic',
+      description: 'Implement retry logic for async operations',
+      exerciseId: 'retry-logic',
+    },
+    {
+      lessonNumber: 10,
+      title: 'Async Array Map',
+      slug: 'async-map',
+      description: 'Map an array with async transformations',
+      exerciseId: 'async-map',
+    },
+  ];
+
+  for (const lesson of phase2Lessons) {
+    await db.insert(lessons).values({
+      phaseId: phase2.id,
+      lessonNumber: lesson.lessonNumber,
+      title: lesson.title,
+      slug: lesson.slug,
+      description: lesson.description,
+      type: 'exercise',
+      content: {
+        exerciseId: lesson.exerciseId,
+      },
+      requiredForCompletion: true,
+    }).onConflictDoNothing();
+  }
+
+  console.log('Phase 2 lessons seeded successfully!');
 }
 
 // Run seed if called directly
