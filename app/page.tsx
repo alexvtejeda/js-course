@@ -1,7 +1,12 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { AccountSelectionDialog } from '@/components/auth/AccountSelectionDialog';
 
 const phases = [
   {
@@ -48,7 +53,42 @@ const phases = [
 
 
 
+interface Account {
+  id: string;
+  name: string;
+}
+
 export default function LandingPage() {
+  const [showAccountDialog, setShowAccountDialog] = useState(false);
+  const [accounts, setAccounts] = useState<Account[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const handleStartJourney = async () => {
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('/api/accounts');
+      const data = await response.json();
+
+      if (data.accounts && data.accounts.length > 0) {
+        setAccounts(data.accounts);
+        setShowAccountDialog(true);
+      } else {
+        router.push('/auth/setup');
+      }
+    } catch (error) {
+      console.error('Error fetching accounts:', error);
+      router.push('/auth/setup');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleNewAccount = () => {
+    router.push('/auth/setup');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted-background">
       {/* Hero Section */}
@@ -60,11 +100,14 @@ export default function LandingPage() {
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             A progressive learning platform where you master JavaScript concepts by building a complete chess game from scratch
           </p>
-          <Link href="/auth/setup">
-            <Button size="lg" className="text-lg px-8 py-6">
-              Start Your Journey
-            </Button>
-          </Link>
+          <Button
+            size="lg"
+            className="text-lg px-8 py-6"
+            onClick={handleStartJourney}
+            disabled={isLoading}
+          >
+            {isLoading ? 'Loading...' : 'Start Your Journey'}
+          </Button>
         </div>
 
         {/* Learning Path */}
@@ -172,6 +215,14 @@ export default function LandingPage() {
           <p>Thank you Claude, you made this possible</p>
         </div>
       </footer>
+
+      {/* Account Selection Dialog */}
+      <AccountSelectionDialog
+        open={showAccountDialog}
+        onOpenChange={setShowAccountDialog}
+        accounts={accounts}
+        onNewAccount={handleNewAccount}
+      />
     </div>
   );
 }
