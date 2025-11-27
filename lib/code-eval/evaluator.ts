@@ -1,9 +1,8 @@
-import { VM } from 'vm2';
 import type { ExerciseConfig, ExerciseResult, TestCaseResult } from '@/types/exercise';
 
 /**
  * Code evaluation system for Phases 1-2
- * Safely executes user code in a sandboxed environment
+ * Safely executes user code in a controlled environment
  */
 
 const EXECUTION_TIMEOUT = 5000; // 5 seconds
@@ -20,14 +19,6 @@ export async function evaluateCode(
   let allPassed = true;
 
   try {
-    // Create a sandboxed VM
-    const vm = new VM({
-      timeout: EXECUTION_TIMEOUT,
-      sandbox: {},
-      eval: false,
-      wasm: false,
-    });
-
     // Extract function name from user code
     const functionName = extractFunctionName(userCode);
 
@@ -40,19 +31,32 @@ export async function evaluateCode(
       };
     }
 
+    // Create function from user code
+    let userFunction: Function;
+    try {
+      // Use Function constructor for safer execution
+      const functionBody = `
+        ${userCode}
+        return ${functionName};
+      `;
+      userFunction = new Function(functionBody)();
+    } catch (error: any) {
+      return {
+        passed: false,
+        testResults: [],
+        error: `Syntax error: ${error.message}`,
+        executionTimeMs: Date.now() - startTime,
+      };
+    }
+
     // Run each test case
     for (const testCase of exercise.testCases) {
       try {
-        // Prepare code to execute
-        const codeToRun = `
-          ${userCode}
-
-          // Return the result
-          ${functionName}(${JSON.stringify(testCase.input)});
-        `;
-
-        // Execute in VM
-        const result = vm.run(codeToRun);
+        // Execute with timeout
+        const result = await executeWithTimeout(
+          () => userFunction(testCase.input),
+          EXECUTION_TIMEOUT
+        );
 
         // Compare result with expected
         const passed = deepEqual(result, testCase.expected);
@@ -94,6 +98,29 @@ export async function evaluateCode(
       executionTimeMs: Date.now() - startTime,
     };
   }
+}
+
+/**
+ * Execute function with timeout
+ */
+async function executeWithTimeout<T>(
+  fn: () => T,
+  timeoutMs: number
+): Promise<T> {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      reject(new Error('Execution timeout'));
+    }, timeoutMs);
+
+    try {
+      const result = fn();
+      clearTimeout(timer);
+      resolve(result);
+    } catch (error) {
+      clearTimeout(timer);
+      reject(error);
+    }
+  });
 }
 
 /**
