@@ -1,0 +1,49 @@
+{
+  "id": "async-await-basic",
+  "title": "Basic Async/Await",
+  "description": "Convert promise-based code to async/await",
+  "instructions": "Write an async function `fetchUserData(userId)` that simulates fetching user data. It should return a Promise that resolves after 100ms with an object: { id: userId, name: 'User' + userId }\n\nExample: fetchUserData(5) should resolve to { id: 5, name: 'User5' }",
+  "difficulty": "easy",
+  "starterCode": "async function fetchUserData(userId) {\n  // Your code here\n  \n}",
+  "solution": "async function fetchUserData(userId) {\n  return new Promise((resolve) => {\n    setTimeout(() => {\n      resolve({ id: userId, name: 'User' + userId });\n    }, 100);\n  });\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "An async function can return a Promise. Use setTimeout to simulate a delay."
+    },
+    {
+      "level": 2,
+      "content": "Return a new Promise that uses setTimeout for 100ms, then resolves with an object containing id and name properties."
+    },
+    {
+      "level": 3,
+      "content": "Use: `return new Promise((resolve) => { setTimeout(() => { resolve({ id: userId, name: 'User' + userId }); }, 100); });`"
+    }
+  ],
+  "testCases": [
+    {
+      "input": 5,
+      "expected": { "id": 5, "name": "User5" },
+      "description": "Fetch user 5"
+    },
+    {
+      "input": 1,
+      "expected": { "id": 1, "name": "User1" },
+      "description": "Fetch user 1"
+    },
+    {
+      "input": 100,
+      "expected": { "id": 100, "name": "User100" },
+      "description": "Fetch user 100",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "Using async function syntax",
+    "Returning promises from async functions",
+    "Creating object literals",
+    "Simulating asynchronous operations"
+  ],
+  "tags": ["async", "await", "promises", "objects"],
+  "timeEstimateMinutes": 10
+}

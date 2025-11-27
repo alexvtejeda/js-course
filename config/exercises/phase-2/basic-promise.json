@@ -1,0 +1,49 @@
+{
+  "id": "basic-promise",
+  "title": "Create a Basic Promise",
+  "description": "Learn how to create and use a simple Promise",
+  "instructions": "Write a function `delayedMessage(message, delay)` that returns a Promise. The promise should resolve with the given message after the specified delay (in milliseconds).\n\nExample: delayedMessage('Hello', 1000) should resolve with 'Hello' after 1 second",
+  "difficulty": "easy",
+  "starterCode": "function delayedMessage(message, delay) {\n  // Return a new Promise\n  \n}",
+  "solution": "function delayedMessage(message, delay) {\n  return new Promise((resolve) => {\n    setTimeout(() => {\n      resolve(message);\n    }, delay);\n  });\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "A Promise is created with `new Promise((resolve, reject) => { ... })`. Use setTimeout to delay the resolution."
+    },
+    {
+      "level": 2,
+      "content": "Inside the Promise constructor, use setTimeout with the delay parameter. Call resolve(message) when the timeout completes."
+    },
+    {
+      "level": 3,
+      "content": "Use: `return new Promise((resolve) => { setTimeout(() => { resolve(message); }, delay); });`"
+    }
+  ],
+  "testCases": [
+    {
+      "input": ["test", 100],
+      "expected": "test",
+      "description": "Resolves with 'test' after delay"
+    },
+    {
+      "input": ["hello world", 50],
+      "expected": "hello world",
+      "description": "Resolves with message"
+    },
+    {
+      "input": ["", 10],
+      "expected": "",
+      "description": "Empty string message",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "Creating new Promises",
+    "Using resolve callback",
+    "Working with setTimeout in Promises",
+    "Understanding Promise timing"
+  ],
+  "tags": ["promises", "async", "setTimeout"],
+  "timeEstimateMinutes": 12
+}

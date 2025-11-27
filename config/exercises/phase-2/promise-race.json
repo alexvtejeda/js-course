@@ -1,0 +1,49 @@
+{
+  "id": "promise-race",
+  "title": "Promise.race() - First to Finish",
+  "description": "Use Promise.race() to get the first resolved promise",
+  "instructions": "Write an async function `fastestResponse(delays)` that takes an array of delay times (in ms) and returns the index of the fastest one (smallest delay). Use Promise.race() to determine which promise resolves first.\n\nEach promise should resolve with its index after its delay time.\n\nExample: fastestResponse([100, 50, 200]) should return 1 (index of 50ms)",
+  "difficulty": "medium",
+  "starterCode": "async function fastestResponse(delays) {\n  // Use Promise.race() to find the fastest\n  \n}",
+  "solution": "async function fastestResponse(delays) {\n  const promises = delays.map((delay, index) => {\n    return new Promise((resolve) => {\n      setTimeout(() => {\n        resolve(index);\n      }, delay);\n    });\n  });\n  return Promise.race(promises);\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "Create a promise for each delay that resolves with its index. Use Promise.race() to get the first one to complete."
+    },
+    {
+      "level": 2,
+      "content": "Use map() to create an array of promises. Each promise should setTimeout for the delay time and resolve with the index. Pass the array to Promise.race()."
+    },
+    {
+      "level": 3,
+      "content": "Use: `const promises = delays.map((delay, index) => new Promise((resolve) => { setTimeout(() => resolve(index), delay); }));` then `return Promise.race(promises);`"
+    }
+  ],
+  "testCases": [
+    {
+      "input": [100, 50, 200],
+      "expected": 1,
+      "description": "50ms is fastest (index 1)"
+    },
+    {
+      "input": [300, 100, 200],
+      "expected": 1,
+      "description": "100ms is fastest (index 1)"
+    },
+    {
+      "input": [10, 20, 5],
+      "expected": 2,
+      "description": "5ms is fastest (index 2)",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "Using Promise.race() to get first result",
+    "Understanding race conditions",
+    "Creating timed promises",
+    "Working with promise arrays"
+  ],
+  "tags": ["promises", "promise-race", "async", "timing"],
+  "timeEstimateMinutes": 15
+}

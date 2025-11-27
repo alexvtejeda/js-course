@@ -1,0 +1,55 @@
+{
+  "id": "try-catch-async",
+  "title": "Try/Catch with Async/Await",
+  "description": "Handle errors using try/catch in async functions",
+  "instructions": "Write an async function `safeParseJSON(jsonString)` that tries to parse a JSON string. If parsing succeeds, return the parsed object. If it fails, return null instead of throwing an error.\n\nExample: safeParseJSON('{\"name\":\"John\"}') returns { name: 'John' }\nExample: safeParseJSON('invalid json') returns null",
+  "difficulty": "medium",
+  "starterCode": "async function safeParseJSON(jsonString) {\n  // Your code here\n  \n}",
+  "solution": "async function safeParseJSON(jsonString) {\n  try {\n    return JSON.parse(jsonString);\n  } catch (error) {\n    return null;\n  }\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "Use try/catch to handle the potential error from JSON.parse(). Return the parsed result if successful, null if it fails."
+    },
+    {
+      "level": 2,
+      "content": "In the try block, call JSON.parse(jsonString) and return the result. In the catch block, return null."
+    },
+    {
+      "level": 3,
+      "content": "Use: `try { return JSON.parse(jsonString); } catch (error) { return null; }`"
+    }
+  ],
+  "testCases": [
+    {
+      "input": "{\"name\":\"John\"}",
+      "expected": { "name": "John" },
+      "description": "Valid JSON"
+    },
+    {
+      "input": "invalid json",
+      "expected": null,
+      "description": "Invalid JSON returns null"
+    },
+    {
+      "input": "[1,2,3]",
+      "expected": [1, 2, 3],
+      "description": "Valid JSON array",
+      "hidden": true
+    },
+    {
+      "input": "{incomplete",
+      "expected": null,
+      "description": "Incomplete JSON returns null",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "Using try/catch with async functions",
+    "Graceful error handling",
+    "Working with JSON.parse()",
+    "Returning different values based on success/failure"
+  ],
+  "tags": ["async", "try-catch", "error-handling", "json"],
+  "timeEstimateMinutes": 12
+}

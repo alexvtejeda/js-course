@@ -1,0 +1,49 @@
+{
+  "id": "retry-logic",
+  "title": "Retry Failed Operations",
+  "description": "Implement retry logic for async operations",
+  "instructions": "Write an async function `retryOperation(operation, maxRetries)` that tries to execute an async operation. If it fails (throws an error), retry up to maxRetries times. Return the successful result or throw the last error if all retries fail.\n\nThe operation parameter is an async function that may throw an error.\n\nExample: If operation succeeds on 2nd try, return its result\nExample: If operation fails all 3 tries, throw the error",
+  "difficulty": "hard",
+  "starterCode": "async function retryOperation(operation, maxRetries) {\n  // Implement retry logic\n  \n}",
+  "solution": "async function retryOperation(operation, maxRetries) {\n  let lastError;\n  for (let i = 0; i <= maxRetries; i++) {\n    try {\n      return await operation();\n    } catch (error) {\n      lastError = error;\n    }\n  }\n  throw lastError;\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "Use a loop to attempt the operation multiple times. Try/catch each attempt, and if it succeeds, return the result immediately."
+    },
+    {
+      "level": 2,
+      "content": "Loop from 0 to maxRetries (inclusive). In each iteration, try to await operation(). If it succeeds, return the result. If it fails, catch the error and continue looping. After all retries, throw the last error."
+    },
+    {
+      "level": 3,
+      "content": "Use: `for (let i = 0; i <= maxRetries; i++) { try { return await operation(); } catch (error) { lastError = error; } }` then `throw lastError;`"
+    }
+  ],
+  "testCases": [
+    {
+      "input": ["SUCCEED_ON_FIRST", 3],
+      "expected": "success",
+      "description": "Success on first try"
+    },
+    {
+      "input": ["SUCCEED_ON_THIRD", 3],
+      "expected": "success",
+      "description": "Success on 3rd try"
+    },
+    {
+      "input": ["ALWAYS_FAIL", 2],
+      "expected": "ERROR:Operation failed",
+      "description": "All retries fail",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "Implementing retry patterns",
+    "Using try/catch in loops",
+    "Handling multiple failure scenarios",
+    "Early return from async functions"
+  ],
+  "tags": ["async", "await", "error-handling", "retry", "advanced"],
+  "timeEstimateMinutes": 20
+}

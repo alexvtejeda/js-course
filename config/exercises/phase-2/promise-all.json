@@ -1,0 +1,49 @@
+{
+  "id": "promise-all",
+  "title": "Promise.all() - Parallel Execution",
+  "description": "Run multiple promises in parallel with Promise.all()",
+  "instructions": "Write an async function `fetchMultipleUsers(userIds)` that takes an array of user IDs and fetches all users in parallel. Each user fetch should simulate a 50ms delay and return { id: userId, name: 'User' + userId }.\n\nReturn an array of all user objects in the same order as the input IDs.\n\nExample: fetchMultipleUsers([1, 2, 3]) should return [{ id: 1, name: 'User1' }, { id: 2, name: 'User2' }, { id: 3, name: 'User3' }]",
+  "difficulty": "medium",
+  "starterCode": "async function fetchMultipleUsers(userIds) {\n  // Use Promise.all() to fetch users in parallel\n  \n}",
+  "solution": "async function fetchMultipleUsers(userIds) {\n  const promises = userIds.map(id => {\n    return new Promise((resolve) => {\n      setTimeout(() => {\n        resolve({ id, name: 'User' + id });\n      }, 50);\n    });\n  });\n  return Promise.all(promises);\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "Use array.map() to create a promise for each user ID, then use Promise.all() to wait for all of them."
+    },
+    {
+      "level": 2,
+      "content": "Map over userIds to create an array of promises. Each promise should setTimeout for 50ms then resolve with the user object. Pass the array to Promise.all()."
+    },
+    {
+      "level": 3,
+      "content": "Create promises array with map, then: `return Promise.all(promises);`. Each promise: `new Promise((resolve) => { setTimeout(() => { resolve({ id, name: 'User' + id }); }, 50); })`"
+    }
+  ],
+  "testCases": [
+    {
+      "input": [1, 2, 3],
+      "expected": [{ "id": 1, "name": "User1" }, { "id": 2, "name": "User2" }, { "id": 3, "name": "User3" }],
+      "description": "Fetch 3 users in parallel"
+    },
+    {
+      "input": [5],
+      "expected": [{ "id": 5, "name": "User5" }],
+      "description": "Single user"
+    },
+    {
+      "input": [10, 20, 30],
+      "expected": [{ "id": 10, "name": "User10" }, { "id": 20, "name": "User20" }, { "id": 30, "name": "User30" }],
+      "description": "Different user IDs",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "Using Promise.all() for parallel execution",
+    "Creating multiple promises with map()",
+    "Understanding parallel vs sequential execution",
+    "Working with arrays of promises"
+  ],
+  "tags": ["promises", "promise-all", "parallel", "async"],
+  "timeEstimateMinutes": 15
+}

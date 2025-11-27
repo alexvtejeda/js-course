@@ -1,0 +1,49 @@
+{
+  "id": "async-map",
+  "title": "Async Array Map",
+  "description": "Map an array with async transformations",
+  "instructions": "Write an async function `asyncMap(array, asyncFunction)` that takes an array and an async function, and returns a new array with the async function applied to each element IN PARALLEL.\n\nThe asyncFunction takes a value and returns a promise that resolves to the transformed value.\n\nExample: asyncMap([1, 2, 3], async (x) => x * 2) should return [2, 4, 6]",
+  "difficulty": "hard",
+  "starterCode": "async function asyncMap(array, asyncFunction) {\n  // Apply async function to all elements in parallel\n  \n}",
+  "solution": "async function asyncMap(array, asyncFunction) {\n  const promises = array.map(item => asyncFunction(item));\n  return Promise.all(promises);\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "Use array.map() to create an array of promises by calling asyncFunction on each element. Then use Promise.all() to wait for all of them."
+    },
+    {
+      "level": 2,
+      "content": "Map over the array to create promises: `array.map(item => asyncFunction(item))`. This creates an array of promises. Pass it to Promise.all()."
+    },
+    {
+      "level": 3,
+      "content": "Use: `const promises = array.map(item => asyncFunction(item));` then `return Promise.all(promises);`"
+    }
+  ],
+  "testCases": [
+    {
+      "input": [[1, 2, 3], "DOUBLE"],
+      "expected": [2, 4, 6],
+      "description": "Double each number"
+    },
+    {
+      "input": [[5, 10], "DOUBLE"],
+      "expected": [10, 20],
+      "description": "Double with different numbers"
+    },
+    {
+      "input": [[1, 2, 3, 4], "ADD_TEN"],
+      "expected": [11, 12, 13, 14],
+      "description": "Add 10 to each",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "Combining map() with async operations",
+    "Using Promise.all() with mapped promises",
+    "Understanding parallel async transformations",
+    "Higher-order async functions"
+  ],
+  "tags": ["async", "promises", "promise-all", "map", "advanced"],
+  "timeEstimateMinutes": 18
+}

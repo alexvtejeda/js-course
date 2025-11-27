@@ -1,0 +1,49 @@
+{
+  "id": "promise-chain",
+  "title": "Promise Chaining",
+  "description": "Chain multiple promises together",
+  "instructions": "Write a function `processNumber(n)` that returns a Promise chain that:\n1. Adds 10 to the number\n2. Then multiplies by 2\n3. Then subtracts 5\n\nExample: processNumber(5) should resolve to 25 ((5 + 10) * 2 - 5 = 25)",
+  "difficulty": "easy",
+  "starterCode": "function processNumber(n) {\n  return Promise.resolve(n)\n    // Chain your operations here\n    \n}",
+  "solution": "function processNumber(n) {\n  return Promise.resolve(n)\n    .then(num => num + 10)\n    .then(num => num * 2)\n    .then(num => num - 5);\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "Use .then() to chain operations. Each .then() receives the result from the previous step."
+    },
+    {
+      "level": 2,
+      "content": "Chain three .then() calls: first adds 10, second multiplies by 2, third subtracts 5. Each returns the new value."
+    },
+    {
+      "level": 3,
+      "content": "Use: `.then(num => num + 10).then(num => num * 2).then(num => num - 5)`"
+    }
+  ],
+  "testCases": [
+    {
+      "input": 5,
+      "expected": 25,
+      "description": "(5 + 10) * 2 - 5 = 25"
+    },
+    {
+      "input": 0,
+      "expected": 15,
+      "description": "(0 + 10) * 2 - 5 = 15"
+    },
+    {
+      "input": 10,
+      "expected": 35,
+      "description": "(10 + 10) * 2 - 5 = 35",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "Chaining promises with .then()",
+    "Passing values through promise chains",
+    "Understanding sequential promise execution",
+    "Working with Promise.resolve()"
+  ],
+  "tags": ["promises", "chaining", "then"],
+  "timeEstimateMinutes": 10
+}

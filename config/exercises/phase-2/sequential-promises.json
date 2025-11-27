@@ -1,0 +1,49 @@
+{
+  "id": "sequential-promises",
+  "title": "Sequential Promise Execution",
+  "description": "Execute promises one after another in sequence",
+  "instructions": "Write an async function `processSequentially(numbers)` that processes an array of numbers one at a time. For each number, wait 50ms and then double it. Return an array of all doubled numbers.\n\nIMPORTANT: Process numbers sequentially (one after another), not in parallel.\n\nExample: processSequentially([1, 2, 3]) should return [2, 4, 6]",
+  "difficulty": "medium",
+  "starterCode": "async function processSequentially(numbers) {\n  // Process each number one at a time\n  \n}",
+  "solution": "async function processSequentially(numbers) {\n  const results = [];\n  for (const num of numbers) {\n    await new Promise((resolve) => {\n      setTimeout(() => {\n        results.push(num * 2);\n        resolve();\n      }, 50);\n    });\n  }\n  return results;\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "Use a for loop with await to process each number sequentially. Create a promise for each number that waits 50ms."
+    },
+    {
+      "level": 2,
+      "content": "Create an empty results array. Use a for...of loop to iterate through numbers. For each number, await a promise that uses setTimeout, then push the doubled value to results."
+    },
+    {
+      "level": 3,
+      "content": "Use: `for (const num of numbers) { await new Promise((resolve) => { setTimeout(() => { results.push(num * 2); resolve(); }, 50); }); }`"
+    }
+  ],
+  "testCases": [
+    {
+      "input": [1, 2, 3],
+      "expected": [2, 4, 6],
+      "description": "Double [1,2,3] sequentially"
+    },
+    {
+      "input": [5],
+      "expected": [10],
+      "description": "Single number"
+    },
+    {
+      "input": [10, 20, 30],
+      "expected": [20, 40, 60],
+      "description": "Larger numbers",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "Sequential async execution with for loops",
+    "Using await in loops",
+    "Understanding sequential vs parallel execution",
+    "Building results arrays asynchronously"
+  ],
+  "tags": ["async", "await", "sequential", "loops"],
+  "timeEstimateMinutes": 15
+}

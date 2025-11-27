@@ -1,0 +1,49 @@
+{
+  "id": "error-handling",
+  "title": "Promise Error Handling",
+  "description": "Handle errors in promises with catch",
+  "instructions": "Write a function `divideAsync(a, b)` that returns a Promise. If b is 0, reject with the error 'Cannot divide by zero'. Otherwise, resolve with a / b.\n\nExample: divideAsync(10, 2) resolves to 5\nExample: divideAsync(10, 0) rejects with 'Cannot divide by zero'",
+  "difficulty": "medium",
+  "starterCode": "function divideAsync(a, b) {\n  // Return a Promise that handles division by zero\n  \n}",
+  "solution": "function divideAsync(a, b) {\n  return new Promise((resolve, reject) => {\n    if (b === 0) {\n      reject('Cannot divide by zero');\n    } else {\n      resolve(a / b);\n    }\n  });\n}",
+  "hints": [
+    {
+      "level": 1,
+      "content": "Promises have both resolve and reject callbacks. Use reject for error cases."
+    },
+    {
+      "level": 2,
+      "content": "Check if b === 0 inside the Promise. If true, call reject with the error message. Otherwise, call resolve with a / b."
+    },
+    {
+      "level": 3,
+      "content": "Use: `return new Promise((resolve, reject) => { if (b === 0) { reject('Cannot divide by zero'); } else { resolve(a / b); } });`"
+    }
+  ],
+  "testCases": [
+    {
+      "input": [10, 2],
+      "expected": 5,
+      "description": "10 / 2 = 5"
+    },
+    {
+      "input": [20, 4],
+      "expected": 5,
+      "description": "20 / 4 = 5"
+    },
+    {
+      "input": [10, 0],
+      "expected": "ERROR:Cannot divide by zero",
+      "description": "Division by zero error",
+      "hidden": true
+    }
+  ],
+  "learningObjectives": [
+    "Using reject callback in Promises",
+    "Handling error conditions",
+    "Understanding Promise rejection",
+    "Conditional logic in async code"
+  ],
+  "tags": ["promises", "error-handling", "reject"],
+  "timeEstimateMinutes": 12
+}
