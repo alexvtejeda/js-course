@@ -111,4 +111,61 @@ Note: The user may activate/deactivate MCPs to manage context usage.
 - Focus on practical game development examples
 - Progress is gated - users cannot advance without completing previous phases
 - Balance between guidance and hands-on learning
-- Can you keep that in memory? so future you knows where you left off and what you need to do to continue?
+
+## Recent Session Progress
+
+### Multi-Account Authentication System (Completed: 2025-11-27)
+
+**Feature**: Users can now manage multiple learning accounts and switch between them seamlessly.
+
+**What Was Built:**
+1. **Cookie-Based Account Storage** (`lib/auth/session.ts`)
+   - Added `getStoredAccountIds()` - retrieves all account IDs from cookies
+   - Added `getStoredAccounts()` - fetches full user details for stored accounts
+   - Added `addStoredAccount()` - appends new accounts to cookie list
+   - Added `switchAccount()` - enables switching between accounts
+   - Accounts stored in `js-playground-accounts` cookie (separate from session cookie)
+
+2. **Updated Authentication Actions** (`lib/auth/actions.ts`)
+   - Modified `setupUser()` to automatically add new accounts to storage
+   - Added `loginToAccount()` server action for account switching
+   - Maintains backward compatibility with existing session flow
+
+3. **Account API Endpoint** (`app/api/accounts/route.ts`)
+   - GET endpoint returns all stored accounts with user details
+   - Used by client-side to populate account selection dialog
+
+4. **Account Selection Dialog** (`components/auth/AccountSelectionDialog.tsx`)
+   - Beautiful UI with avatar initials for each account
+   - Displays all stored accounts with "Continue learning" subtitle
+   - "Create New Account" button for adding new profiles
+   - Uses ShadCN Avatar and Dialog components
+
+5. **Updated Landing Page** (`app/page.tsx`)
+   - Now checks for existing accounts on "Start Your Journey" click
+   - Shows account selection dialog if accounts exist
+   - Direct to setup page if no accounts found
+   - Client-side component with loading states
+
+6. **API Session Migration**
+   - Fixed `app/api/code-eval/route.ts` and `app/api/hints/route.ts`
+   - Changed from `session.userId` to `session.id` (breaking change fix)
+   - Added `credentials: 'include'` to fetch requests in `components/learning/CodeEditor.tsx`
+
+**Test Accounts Created:**
+- "Alex" - User's personal learning account
+- "Claude Testing Account" - For AI testing and bug detection
+
+**Use Case:**
+The user wanted separate accounts - one personal for learning, another for Claude to test features and identify bugs without affecting their progress.
+
+**Git Commits:**
+- Multi-account authentication system commits (already pushed)
+- Session property migration fix (commit c7eda12)
+- Credentials include fix (commit b7269eb)
+
+**What to Check Next Session:**
+1. Verify account switching works correctly after page reloads
+2. Test that progress is isolated between accounts
+3. Consider adding account deletion/logout feature if needed
+4. May want to add visual distinction (icons/colors) for different account types
