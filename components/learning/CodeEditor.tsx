@@ -38,10 +38,40 @@ export function CodeEditor({
   const [hints, setHints] = useState<{ level: number; content: string }[]>([]);
   const [currentHintLevel, setCurrentHintLevel] = useState(0);
   const [isLoadingHint, setIsLoadingHint] = useState(false);
+  const [isLoadingSolution, setIsLoadingSolution] = useState(true);
 
+  // Load saved solution when component mounts or lesson changes
   useEffect(() => {
-    setCode(starterCode);
-  }, [starterCode]);
+    const loadSavedSolution = async () => {
+      setIsLoadingSolution(true);
+      try {
+        const response = await fetch(
+          `/api/submissions?lessonId=${lessonId}`,
+          {
+            credentials: 'include',
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.code) {
+            setCode(data.code);
+          } else {
+            setCode(starterCode);
+          }
+        } else {
+          setCode(starterCode);
+        }
+      } catch (error) {
+        console.error('Failed to load saved solution:', error);
+        setCode(starterCode);
+      } finally {
+        setIsLoadingSolution(false);
+      }
+    };
+
+    loadSavedSolution();
+  }, [lessonId, starterCode]);
 
   const runCode = async () => {
     setIsRunning(true);
@@ -137,21 +167,27 @@ export function CodeEditor({
         </CardHeader>
         <CardContent>
           <div className="border rounded-lg overflow-hidden">
-            <Editor
-              height="400px"
-              defaultLanguage="javascript"
-              value={code}
-              onChange={(value) => setCode(value || '')}
-              theme="vs-dark"
-              options={{
-                minimap: { enabled: false },
-                fontSize: 14,
-                lineNumbers: 'on',
-                scrollBeyondLastLine: false,
-                automaticLayout: true,
-                tabSize: 2,
-              }}
-            />
+            {isLoadingSolution ? (
+              <div className="h-[400px] flex items-center justify-center bg-[#1e1e1e] text-gray-400">
+                Loading your saved solution...
+              </div>
+            ) : (
+              <Editor
+                height="400px"
+                defaultLanguage="javascript"
+                value={code}
+                onChange={(value) => setCode(value || '')}
+                theme="vs-dark"
+                options={{
+                  minimap: { enabled: false },
+                  fontSize: 14,
+                  lineNumbers: 'on',
+                  scrollBeyondLastLine: false,
+                  automaticLayout: true,
+                  tabSize: 2,
+                }}
+              />
+            )}
           </div>
         </CardContent>
       </Card>
