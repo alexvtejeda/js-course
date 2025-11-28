@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { loginToAccount } from '@/lib/auth/actions';
 import { User, Plus } from 'lucide-react';
+import { LoadingOverlay } from '@/components/ui/LoadingOverlay';
 
 interface Account {
   id: string;
@@ -46,6 +47,9 @@ export function AccountSelectionDialog({
         console.error('Login error:', result.error);
         setIsLoading(false);
         setSelectedAccountId(null);
+      } else {
+        // Success - the loading overlay will show during navigation
+        router.refresh();
       }
     } catch (error) {
       console.error('Error logging in:', error);
@@ -69,63 +73,66 @@ export function AccountSelectionDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Select an Account</DialogTitle>
-          <DialogDescription>
-            Choose which account you want to continue with
-          </DialogDescription>
-        </DialogHeader>
+    <>
+      {isLoading && <LoadingOverlay logoSrc="/logo-white.svg" />}
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Select an Account</DialogTitle>
+            <DialogDescription>
+              Choose which account you want to continue with
+            </DialogDescription>
+          </DialogHeader>
 
-        <div className="space-y-2 py-4">
-          {accounts.map((account) => (
+          <div className="space-y-2 py-4">
+            {accounts.map((account) => (
+              <Button
+                key={account.id}
+                variant="outline"
+                className="w-full justify-start h-auto py-3 px-4"
+                onClick={() => handleAccountSelect(account.id)}
+                disabled={isLoading}
+              >
+                <Avatar className="h-10 w-10 mr-3">
+                  <AvatarFallback className="bg-primary text-white">
+                    {getInitials(account.name)}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col items-start">
+                  <span className="font-medium">{account.name}</span>
+                  <span className="text-xs text-muted-foreground">
+                    Continue learning
+                  </span>
+                </div>
+                {isLoading && selectedAccountId === account.id && (
+                  <span className="ml-auto text-sm text-muted-foreground">
+                    Loading...
+                  </span>
+                )}
+              </Button>
+            ))}
+          </div>
+
+          <div className="border-t pt-4">
             <Button
-              key={account.id}
-              variant="outline"
-              className="w-full justify-start h-auto py-3 px-4"
-              onClick={() => handleAccountSelect(account.id)}
+              variant="ghost"
+              className="w-full justify-start"
+              onClick={handleNewAccount}
               disabled={isLoading}
             >
-              <Avatar className="h-10 w-10 mr-3">
-                <AvatarFallback className="bg-primary text-white">
-                  {getInitials(account.name)}
-                </AvatarFallback>
-              </Avatar>
+              <div className="h-10 w-10 mr-3 rounded-full bg-muted flex items-center justify-center">
+                <Plus className="h-5 w-5" />
+              </div>
               <div className="flex flex-col items-start">
-                <span className="font-medium">{account.name}</span>
+                <span className="font-medium">Create New Account</span>
                 <span className="text-xs text-muted-foreground">
-                  Continue learning
+                  Start a fresh learning journey
                 </span>
               </div>
-              {isLoading && selectedAccountId === account.id && (
-                <span className="ml-auto text-sm text-muted-foreground">
-                  Loading...
-                </span>
-              )}
             </Button>
-          ))}
-        </div>
-
-        <div className="border-t pt-4">
-          <Button
-            variant="ghost"
-            className="w-full justify-start"
-            onClick={handleNewAccount}
-            disabled={isLoading}
-          >
-            <div className="h-10 w-10 mr-3 rounded-full bg-muted flex items-center justify-center">
-              <Plus className="h-5 w-5" />
-            </div>
-            <div className="flex flex-col items-start">
-              <span className="font-medium">Create New Account</span>
-              <span className="text-xs text-muted-foreground">
-                Start a fresh learning journey
-              </span>
-            </div>
-          </Button>
-        </div>
-      </DialogContent>
-    </Dialog>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }

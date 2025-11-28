@@ -14,13 +14,13 @@ export function ExerciseCard({ exercise, lessonId, phase, onSuccess }: ExerciseC
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case 'easy':
-        return 'bg-green-500';
+        return 'bg-chart-1 dark:text-white';
       case 'medium':
-        return 'bg-yellow-500';
+        return 'bg-chart-4 dark:text-white';
       case 'hard':
-        return 'bg-red-500';
+        return 'bg-chart-3 dark:text-white';
       default:
-        return 'bg-gray-500';
+        return 'bg-muted-foreground';
     }
   };
 
@@ -52,7 +52,7 @@ export function ExerciseCard({ exercise, lessonId, phase, onSuccess }: ExerciseC
             <div>
               <h3 className="font-semibold mb-2">Instructions</h3>
               <div className="bg-gray-50 p-4 rounded-lg">
-                <pre className="whitespace-pre-wrap text-sm font-mono">
+                <pre className="whitespace-pre-wrap text-sm font-mono dark:text-background">
                   {exercise.instructions}
                 </pre>
               </div>
