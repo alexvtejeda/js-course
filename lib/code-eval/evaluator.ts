@@ -5,7 +5,7 @@ import type { ExerciseConfig, ExerciseResult, TestCaseResult } from '@/types/exe
  * Safely executes user code in a controlled environment
  */
 
-const EXECUTION_TIMEOUT = 5000; // 5 seconds
+const EXECUTION_TIMEOUT = 15000; // 15 seconds
 
 /**
  * Evaluate user code against test cases
@@ -53,8 +53,11 @@ export async function evaluateCode(
     for (const testCase of exercise.testCases) {
       try {
         // Execute with timeout
+        // Spread input array to handle functions with multiple parameters
         const result = await executeWithTimeout(
-          () => userFunction(testCase.input),
+          () => Array.isArray(testCase.input)
+            ? userFunction(...testCase.input)
+            : userFunction(testCase.input),
           EXECUTION_TIMEOUT
         );
 
@@ -109,7 +112,7 @@ async function executeWithTimeout<T>(
 ): Promise<T> {
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => {
-      reject(new Error('Execution timeout'));
+      reject(new Error('Your code took too long to execute (>15 seconds). This usually indicates an infinite loop. Check your loop conditions and make sure they will eventually terminate.'));
     }, timeoutMs);
 
     try {
