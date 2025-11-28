@@ -9,7 +9,8 @@ import { redirect } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import {ArrowLeft } from 'lucide-react';
+import { LoadingOverlay } from "@/components/ui/LoadingOverlay"; 
 
 export default async function Phase1Page() {
   const user = await requireAuth();
@@ -76,6 +77,7 @@ export default async function Phase1Page() {
 
   return (
     <div className="min-h-screen bg-background">
+      <LoadingOverlay logoSrc="/logo-white.svg" />
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -109,8 +111,8 @@ export default async function Phase1Page() {
               reinforce core concepts.
             </p>
             <div className="bg-orange-50 p-4 rounded-lg">
-              <p className="font-semibold mb-2">📚 What you'll practice:</p>
-              <ul className="list-disc list-inside space-y-1 text-sm">
+              <p className="font-semibold mb-2 dark:text-background">📚 What you'll practice:</p>
+              <ul className="list-disc list-inside space-y-1 text-sm dark:text-background">
                 <li>Loops and iteration patterns</li>
                 <li>Array methods and manipulation</li>
                 <li>Variable declaration and scope</li>

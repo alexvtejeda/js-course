@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
+import { LoadingOverlay } from "@/components/ui/LoadingOverlay"; 
 
 export default async function Phase2Page() {
   const user = await requireAuth();
@@ -75,6 +76,7 @@ export default async function Phase2Page() {
 
   return (
     <div className="min-h-screen bg-background">
+      <LoadingOverlay logoSrc="/logo-white.svg" />
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
