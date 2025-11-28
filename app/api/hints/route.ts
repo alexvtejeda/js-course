@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
   try {
     const session = await getSession();
 
-    if (!session?.userId) {
+    if (!session?.id) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Record hint usage
-    await recordHintUsage(session.userId, lessonId, level);
+    await recordHintUsage(session.id, lessonId, level);
 
     return NextResponse.json({
       hint: hint.content,

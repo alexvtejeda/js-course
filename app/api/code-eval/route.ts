@@ -12,7 +12,10 @@ export async function POST(request: NextRequest) {
   try {
     const session = await getSession();
 
-    if (!session?.userId) {
+    console.log('[API] Session result:', session);
+
+    if (!session?.id) {
+      console.log('[API] No session or userId, returning 401');
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -37,14 +40,14 @@ export async function POST(request: NextRequest) {
     }
 
     // Mark lesson as started if not already
-    await startLesson(session.userId, lessonId);
+    await startLesson(session.id, lessonId);
 
     // Evaluate the code
     const result = await evaluateCode(code, exerciseConfig);
 
     // Record the submission
     await recordCodeSubmission(
-      session.userId,
+      session.id,
       lessonId,
       code,
       {
@@ -57,7 +60,7 @@ export async function POST(request: NextRequest) {
 
     // If all tests passed, try to complete the phase
     if (result.passed) {
-      await tryCompletePhase(session.userId, phase);
+      await tryCompletePhase(session.id, phase);
     }
 
     // Return only non-hidden test results to the client
