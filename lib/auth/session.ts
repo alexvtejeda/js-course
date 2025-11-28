@@ -5,6 +5,7 @@ import { eq, inArray } from 'drizzle-orm';
 
 const SESSION_COOKIE_NAME = 'js-playground-session';
 const ACCOUNTS_COOKIE_NAME = 'js-playground-accounts';
+const THEME_COOKIE_NAME = 'js-playground-theme';
 const SESSION_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
 
 export interface SessionUser {
@@ -159,4 +160,27 @@ export async function switchAccount(userId: string): Promise<boolean> {
 
   await createSession(userId);
   return true;
+}
+
+/**
+ * Get the stored theme preference from cookies
+ */
+export async function getThemePreference(): Promise<'light' | 'dark'> {
+  const cookieStore = await cookies();
+  const theme = cookieStore.get(THEME_COOKIE_NAME)?.value;
+  return (theme === 'light' || theme === 'dark') ? theme : 'dark';
+}
+
+/**
+ * Set the theme preference in cookies
+ */
+export async function setThemePreference(theme: 'light' | 'dark'): Promise<void> {
+  const cookieStore = await cookies();
+  cookieStore.set(THEME_COOKIE_NAME, theme, {
+    httpOnly: false, // Allow JavaScript access for client-side sync
+    secure: false,
+    sameSite: 'lax',
+    maxAge: SESSION_MAX_AGE,
+    path: '/',
+  });
 }
