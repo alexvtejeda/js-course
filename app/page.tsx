@@ -1,20 +1,17 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { AccountSelectionDialog } from '@/components/auth/AccountSelectionDialog';
-
+import SpotlightCard from '@/components/ui/SpotlightCard';
+import StarBorder from '@/components/ui/StarBorder';
 const phases = [
   {
     number: 1,
     title: 'JavaScript Fundamentals',
     description: 'Review core JavaScript concepts including loops, arrays, and variable declaration',
-    color: 'bg-card',
-    borderColor: 'border-secondary',
     badgeColor: 'bg-primary',
   },
   {
@@ -29,24 +26,18 @@ const phases = [
     number: 3,
     title: 'React Basics & Chess Setup',
     description: 'Learn React fundamentals while setting up the chess board',
-    color: 'bg-card',
-    borderColor: 'border-secondary',
     badgeColor: 'bg-chart-2',
   },
   {
     number: 4,
     title: 'Chess Game Logic',
     description: 'Implement piece movement, check, and checkmate detection',
-    color: 'bg-card',
-    borderColor: 'border-secondary',
     badgeColor: 'bg-chart-3',
   },
   {
     number: 5,
     title: 'AI Integration',
     description: 'Integrate Ollama and Chess-Llama for AI-powered gameplay',
-    color: 'bg-card',
-    borderColor: 'border-secondary',
     badgeColor: 'bg-chart-4',
   },
 ];
@@ -90,24 +81,25 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted-background">
+    <div className="min-h-screen bg-gradient-to-b from-background to-muted-background relative">
+      {/* Animated Background */}
+      <div className="fixed inset-0 -z-10 opacity-20">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-transparent to-chart-2/20 animate-gradient-slow"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1),transparent_50%)]"></div>
+      </div>
+
       {/* Hero Section */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-            Learn JavaScript by Building Chess
+      <div className="flex flex-col container mx-auto px-4 py-16">
+        <div className="flex flex-col items-center text-center mb-16">
+          <h1 className="mx-auto px-4 text-4xl text-center text-primary mb-16 font-bold animate-fade-in">
+            JavaScript Chess Learning Platform
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             A progressive learning platform where you master JavaScript concepts by building a complete chess game from scratch
           </p>
-          <Button
-            size="lg"
-            className="text-lg px-8 py-6"
-            onClick={handleStartJourney}
-            disabled={isLoading}
-          >
+         <StarBorder as="button" color="red" className="duration-300 ease-in-out hover:scale-[1.1] text-lg px-8 py-8" speed="5s"  onClick={handleStartJourney} disabled={isLoading}>
             {isLoading ? 'Loading...' : 'Start Your Journey'}
-          </Button>
+          </StarBorder>
         </div>
 
         {/* Learning Path */}
@@ -117,20 +109,23 @@ export default function LandingPage() {
             {phases.map((phase) => (
               <Card
                 key={phase.number}
-                className={`${phase.color} ${phase.borderColor} border-2 transition-all hover:shadow-lg hover:-translate-y-1`}
+                className={`bg-card border-secondary border-2 transition-all hover:-translate-y-1`}
               >
-                <CardHeader>
-                  <div className="flex items-center justify-between mb-2">
-                    <Badge className={`${phase.badgeColor} text-white`}>
-                      Phase {phase.number}
-                    </Badge>
-                  </div>
-                  <CardTitle className="text-xl">{phase.title}</CardTitle>
-                  <CardDescription className="text-gray-700">
-                    {phase.description}
-                  </CardDescription>
-                </CardHeader>
+                <SpotlightCard className="p-4 custom-spotlight-card" spotlightColor="rgba(153, 246, 228, 0.5)">
+                  <CardHeader>
+                    <div className="flex items-center justify-between mb-2">
+                      <Badge className={`${phase.badgeColor} text-white`}>
+                        Phase {phase.number}
+                      </Badge>
+                    </div>
+                    <CardTitle className="text-xl">{phase.title}</CardTitle>
+                    <CardDescription className="text-gray-700">
+                      {phase.description}
+                    </CardDescription>
+                  </CardHeader>              
+                </SpotlightCard>
               </Card>
+
             ))}
           </div>
         </div>
@@ -167,9 +162,9 @@ export default function LandingPage() {
         </div>
 
         {/* Tech Stack */}
-        <div className="mt-16 p-8 bg-white rounded-lg shadow-md">
+        <div className="mt-16 p-8 bg-background border border-secondary rounded-lg shadow-lg shadow-muted">
           <h2 className="text-2xl font-bold text-center mb-6">What You'll Learn</h2>
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div>
               <h4 className="font-bold mb-3 text-lg">JavaScript Concepts</h4>
               <ul className="space-y-2 text-gray-700">
@@ -204,12 +199,23 @@ export default function LandingPage() {
                 </li>
               </ul>
             </div>
+            <div>
+              <h4 className="font-bold mb-3 text-lg">AI/LLM</h4>
+              <ul className="space-y-2 text-gray-700">
+                <li className="flex items-center">
+                  <span className="mr-2">✓</span> API Infraestructure
+                </li>
+                <li className="flex items-center">
+                  <span className="mr-2">✓</span> Fine-tuning
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Footer */}
-      <footer className="bg-background border-t mt-16 py-8">
+      <footer className="bg-background mt-16 py-8 border-t border-secondary rounded-lg shadow-lg shadow-muted ">
         <div className="container mx-auto px-4 text-center text-gray-600">
           <p>Built with Next.js, React, and PostgreSQL</p>
           <p>Thank you Claude, you made this possible</p>
