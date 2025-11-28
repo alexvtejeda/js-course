@@ -66,11 +66,12 @@ A progressive JavaScript learning platform where you build a chess game from scr
 
 ## Tech Stack
 
-- **Frontend**: Next.js 15 (App Router)
-- **UI**: ShadCN + Tailwind CSS
+- **Frontend**: Next.js 16 (App Router) + React 19
+- **UI**: ShadCN + Tailwind CSS + Custom Animations
 - **Backend**: PostgreSQL + DrizzleORM
 - **Package Manager**: Bun
 - **Infrastructure**: Docker
+- **Theme**: Dark/Light mode with cookie persistence
 
 ## Development Commands
 
@@ -93,9 +94,12 @@ bun start
 ## Important Notes
 
 - **Docker Required**: Make sure Docker Desktop is running with WSL2 integration enabled
-- **Database Port**: PostgreSQL runs on port 5432
-- **Session-based Auth**: No password required - single user learning environment
+- **Database Port**: PostgreSQL runs on port 5433 (host) -> 5432 (container)
+- **Multi-Account Auth**: Cookie-based account switching, no passwords required
 - **Progressive Unlocking**: Complete each phase to unlock the next
+- **Theme Support**: Dark/light mode with persistent preferences
+- **Activity Tracking**: Daily activity heatmap on dashboard
+- **Auto-Save**: Code solutions automatically load from previous submissions
 
 ## Troubleshooting
 
