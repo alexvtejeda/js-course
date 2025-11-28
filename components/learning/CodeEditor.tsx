@@ -51,6 +51,7 @@ export function CodeEditor({
       const response = await fetch('/api/code-eval', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include', // Include cookies in the request
         body: JSON.stringify({
           code,
           lessonId,
@@ -93,6 +94,7 @@ export function CodeEditor({
       const response = await fetch('/api/hints', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include', // Include cookies in the request
         body: JSON.stringify({
           lessonId,
           exerciseId,
