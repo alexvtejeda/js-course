@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth/session';
 import { getRecentSubmissions } from '@/lib/progress/queries';
+import { db } from '@/lib/db';
+import { userLessonProgress } from '@/lib/db/schema';
+import { eq, and } from 'drizzle-orm';
 
 /**
  * GET /api/submissions?lessonId=xxx
@@ -27,8 +30,19 @@ export async function GET(request: NextRequest) {
     // Get the most recent submission (whether passed or not)
     const submissions = await getRecentSubmissions(session.id, lessonId, 1);
 
+    // Get lesson progress status
+    const lessonProgress = await db.query.userLessonProgress.findFirst({
+      where: and(
+        eq(userLessonProgress.userId, session.id),
+        eq(userLessonProgress.lessonId, lessonId)
+      ),
+    });
+
     if (submissions.length === 0) {
-      return NextResponse.json({ code: null });
+      return NextResponse.json({
+        code: null,
+        status: lessonProgress?.status || 'not_started'
+      });
     }
 
     const latestSubmission = submissions[0];
@@ -37,6 +51,7 @@ export async function GET(request: NextRequest) {
       code: latestSubmission.code,
       submittedAt: latestSubmission.submittedAt,
       passed: latestSubmission.passed,
+      status: lessonProgress?.status || 'not_started'
     });
   } catch (error: any) {
     console.error('Error fetching submissions:', error);

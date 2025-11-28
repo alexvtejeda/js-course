@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Alert } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Play, Lightbulb } from 'lucide-react';
+import { useActivityTracking } from '@/hooks/useActivityTracking';
 
 interface TestCaseResult {
   description: string;
@@ -39,8 +40,12 @@ export function CodeEditor({
   const [currentHintLevel, setCurrentHintLevel] = useState(0);
   const [isLoadingHint, setIsLoadingHint] = useState(false);
   const [isLoadingSolution, setIsLoadingSolution] = useState(true);
+  const [lessonStatus, setLessonStatus] = useState<'not_started' | 'in_progress' | 'completed'>('not_started');
 
-  // Load saved solution when component mounts or lesson changes
+  // Track time spent on this lesson
+  useActivityTracking(lessonId, phase);
+
+  // Load saved solution and lesson status when component mounts or lesson changes
   useEffect(() => {
     const loadSavedSolution = async () => {
       setIsLoadingSolution(true);
@@ -58,6 +63,10 @@ export function CodeEditor({
             setCode(data.code);
           } else {
             setCode(starterCode);
+          }
+          // Set lesson status if available
+          if (data.status) {
+            setLessonStatus(data.status);
           }
         } else {
           setCode(starterCode);
@@ -193,7 +202,7 @@ export function CodeEditor({
       </Card>
 
       {/* Results and Hints */}
-      <div className="space-y-6">
+      <div className="space-y-6 flex flex-col justify-between">
         {/* Hints Section */}
         <Card>
           <CardHeader>
@@ -238,26 +247,33 @@ export function CodeEditor({
           </CardContent>
         </Card>
 
-        {/* Results Section */}
-        {result && (
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                Test Results
-                {result.passed ? (
-                  <Badge className="bg-green-500">All Tests Passed! ✓</Badge>
+        {/* Results Section - Always visible */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              Test Results
+              {result ? (
+                result.passed ? (
+                  <Badge className="bg-chart-1">All Tests Passed! ✓</Badge>
                 ) : (
                   <Badge variant="destructive">
                     {result.passedTests || 0} / {result.totalTests || 0} Passed
                   </Badge>
-                )}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              {result.error ? (
+                )
+              ) : lessonStatus === 'completed' ? (
+                <Badge className="bg-green-500 dark:text-white">Completed ✓</Badge>
+              ) : (
+                <Badge variant="outline">Not Submitted</Badge>
+              )}
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="overflow-hidden">
+            {result ? (
+              // Show actual test results when code has been run
+              result.error ? (
                 <Alert variant="destructive">
                   <p className="font-semibold">Error:</p>
-                  <p className="text-sm mt-1">{result.error}</p>
+                  <p className="text-sm mt-1 break-words">{result.error}</p>
                 </Alert>
               ) : (
                 <div className="space-y-3">
@@ -273,28 +289,28 @@ export function CodeEditor({
                       <div className="flex items-start gap-2">
                         <Badge
                           variant={test.passed ? 'default' : 'destructive'}
-                          className="mt-0.5"
+                          className="mt-0.5 shrink-0"
                         >
                           {test.passed ? '✓' : '✗'}
                         </Badge>
-                        <div className="flex-1">
-                          <p className="font-semibold text-sm">{test.description}</p>
+                        <div className="flex-1 min-w-0 overflow-hidden">
+                          <p className="font-semibold text-sm break-words dark:text-background">{test.description}</p>
                           <div className="mt-2 text-sm space-y-1">
-                            <p>
-                              <span className="font-medium">Input:</span>{' '}
-                              {JSON.stringify(test.input)}
+                            <p className="break-words">
+                              <span className="font-medium dark:text-background">Input:</span>{' '}
+                              <span className="break-all dark:text-background">{JSON.stringify(test.input)}</span>
                             </p>
-                            <p>
-                              <span className="font-medium">Expected:</span>{' '}
-                              {JSON.stringify(test.expected)}
+                            <p className="break-words">
+                              <span className="font-medium dark:text-background">Expected:</span>{' '}
+                              <span className="break-all dark:text-background">{JSON.stringify(test.expected)}</span>
                             </p>
-                            <p>
-                              <span className="font-medium">Got:</span>{' '}
-                              {JSON.stringify(test.actual)}
+                            <p className="break-words">
+                              <span className="font-medium dark:text-background">Got:</span>{' '}
+                              <span className="break-all dark:text-background">{JSON.stringify(test.actual)}</span>
                             </p>
                             {test.error && (
-                              <p className="text-red-600">
-                                <span className="font-medium">Error:</span> {test.error}
+                              <p className="text-red-600 break-words">
+                                <span className="font-medium dark:text-background">Error:</span> {test.error}
                               </p>
                             )}
                           </div>
@@ -303,16 +319,30 @@ export function CodeEditor({
                     </Alert>
                   ))}
 
-                  {result.executionTimeMs && (
+                  {result.executionTimeMs != null && (
                     <p className="text-xs text-gray-600 text-right">
                       Execution time: {result.executionTimeMs}ms
                     </p>
                   )}
                 </div>
-              )}
-            </CardContent>
-          </Card>
-        )}
+              )
+            ) : lessonStatus === 'completed' ? (
+              // Show completion message if lesson is already completed
+              <Alert className="bg-green-50 border-green-200 dark:text-background">
+                <p className="text-sm text-chart-1">
+                  You already completed this challenge. Feel free to move on to the next one or continue practicing!
+                </p>
+              </Alert>
+            ) : (
+              // Show default message if no submissions yet
+              <Alert>
+                <p className="text-sm text-muted-foreground">
+                  You haven't submitted any attempts yet. Click "Run Code" to test your solution.
+                </p>
+              </Alert>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
