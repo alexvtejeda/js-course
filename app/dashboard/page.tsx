@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { getAllPhasesWithProgress } from '@/lib/progress/phase-gating';
 import { getUserStats } from '@/lib/progress/queries';
 
@@ -32,6 +33,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-background">
+      <ThemeToggle />
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -49,45 +51,56 @@ export default async function DashboardPage() {
           </CardHeader>
           <CardContent>
             <Progress value={overallProgress} className="h-3" />
-            <p className="text-sm text-gray-600 mt-2">{Math.round(overallProgress)}% complete</p>
+            <p className="text-sm text-muted-foreground mt-2">{Math.round(overallProgress)}% complete</p>
           </CardContent>
         </Card>
 
         {/* Phases */}
         <div className="mb-8">
           <h2 className="text-2xl font-bold mb-4">Learning Phases</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {phasesWithProgress.map((phase) => {
+          <div className={`grid md:grid-cols-2 gap-6 ${
+            phasesWithProgress.length % 3 === 2
+              ? 'lg:grid-cols-[repeat(3,minmax(0,400px))] lg:justify-center'
+              : 'lg:grid-cols-3'
+          }`}>
+            {phasesWithProgress.map((phase, index) => {
               const status = phase.progress?.status || 'locked';
               const isAccessible = status === 'unlocked' || status === 'in_progress' || status === 'completed';
               const lessonProgress = phase.totalLessons > 0
                 ? (phase.completedLessons / phase.totalLessons) * 100
                 : 0;
 
+              // Determine badge color based on phase number (matching landing page)
+              const badgeColorMap: Record<number, string> = {
+                1: 'bg-primary',
+                2: 'bg-chart-1',
+                3: 'bg-chart-2',
+                4: 'bg-chart-3',
+                5: 'bg-chart-4',
+              };
+              const badgeColor = badgeColorMap[phase.phaseNumber] || 'bg-primary';
+
               return (
                 <Card
                   key={phase.id}
-                  className={`border-2 transition-all ${
+                  className={`border-2 border-secondary transition-all ${
                     isAccessible ? 'hover:shadow-lg hover:-translate-y-1' : 'opacity-60'
                   }`}
-                  style={{
-                    backgroundColor: phase.color || '#fff',
-                  }}
                 >
                   <CardHeader>
                     <div className="flex items-center justify-between mb-2">
-                      <Badge variant="outline">Phase {phase.phaseNumber}</Badge>
+                      <Badge className={`${badgeColor} text-white`}>Phase {phase.phaseNumber}</Badge>
                       {getStatusBadge(status)}
                     </div>
                     <CardTitle className="text-xl">{phase.title}</CardTitle>
-                    <CardDescription className="text-gray-700">
+                    <CardDescription>
                       {phase.description}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     {phase.totalLessons > 0 && (
                       <div className="mb-4">
-                        <div className="flex justify-between text-sm text-foreground mb-1">
+                        <div className="flex justify-between text-sm mb-1">
                           <span>Lessons</span>
                           <span>{phase.completedLessons} / {phase.totalLessons}</span>
                         </div>
@@ -130,7 +143,7 @@ export default async function DashboardPage() {
               <p className="text-3xl font-bold">
                 {Math.floor(userStats.totalTimeSpent / 3600)}h
               </p>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-muted-foreground">
                 {Math.floor((userStats.totalTimeSpent % 3600) / 60)}m
               </p>
             </CardContent>
@@ -145,7 +158,7 @@ export default async function DashboardPage() {
                   ? Math.round((userStats.successfulSubmissions / userStats.totalSubmissions) * 100)
                   : 0}%
               </p>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-muted-foreground">
                 {userStats.successfulSubmissions} / {userStats.totalSubmissions} submissions
               </p>
             </CardContent>
